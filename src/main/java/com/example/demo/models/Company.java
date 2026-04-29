@@ -1,32 +1,29 @@
 package com.example.demo.models;
 
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Customer")
-public class Customer {
+@Table(name = "Company") // Matches your SQL script naming
+public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, length = 30)
+    @Column(unique = true, nullable = false, length = 30)
     private String name;
 
     @Column(unique = true, length = 15)
     private String phone;
 
-    // Default Constructor (Required by JPA)
-    public Customer() {}
+    // Default Constructor
+    public Company() {}
 
-    // Getters and Setters (You can use Alt+Insert in IntelliJ to generate these quickly)
+    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
-
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 }
