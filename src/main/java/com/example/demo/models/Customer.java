@@ -1,26 +1,32 @@
 package com.example.demo.models;
 
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Customer")
+@Table(name = "customer") // Lowercase, standard SQL convention
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, length = 30)
+    // Hibernate will automatically name this column 'name'
+    @Column(unique = true, nullable = false, length = 50)
     private String name;
 
-    @Column(unique = true, length = 15)
+    // Hibernate will automatically name this column 'phone'
+    @Column(unique = true, nullable = false, length = 15)
     private String phone;
 
-    // Default Constructor (Required by JPA)
+    // Default Constructor required by JPA
     public Customer() {}
 
-    // Getters and Setters (You can use Alt+Insert in IntelliJ to generate these quickly)
+    public Customer(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

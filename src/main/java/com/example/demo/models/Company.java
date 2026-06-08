@@ -3,7 +3,7 @@ package com.example.demo.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Company") // Matches your SQL script naming
+@Table(name = "company") // Standard lowercase
 public class Company {
 
     @Id
@@ -22,8 +22,10 @@ public class Company {
     // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 }

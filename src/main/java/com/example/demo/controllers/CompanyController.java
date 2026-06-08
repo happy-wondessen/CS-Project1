@@ -17,10 +17,9 @@ public class CompanyController {
 
     // GET: http://localhost:8080/api/companies
     @GetMapping
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public ResponseEntity<List<Company>> getAllCompanies() {
+        return ResponseEntity.ok(companyService.getAllCompanies());
     }
-
     // GET: http://localhost:8080/api/companies/1
     @GetMapping("/{id}")
     public ResponseEntity<Company> getCompanyById(@PathVariable Integer id) {
