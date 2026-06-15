@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get Inventory by Store
+method: GET
+url: '{{baseUrl}}/api/inventory/store/1'
+order: 2000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200 OR 400', function() { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });
+      pm.test('If 200: response is an array', function() { if (pm.response.code === 200) { var jsonData = pm.response.json(); pm.expect(jsonData).to.be.an('array'); } });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

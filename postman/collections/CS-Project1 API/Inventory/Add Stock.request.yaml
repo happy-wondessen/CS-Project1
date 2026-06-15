@@ -1,0 +1,20 @@
+$kind: http-request
+name: Add Stock
+method: POST
+url: '{{baseUrl}}/api/inventory/add'
+order: 3000
+queryParams:
+  - key: storeId
+    value: '1'
+  - key: itemId
+    value: '1'
+  - key: quantity
+    value: '20'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200 OR 400', function() { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });
+      pm.test('If 200: response has id, store, item, quantity', function() { if (pm.response.code === 200) { var jsonData = pm.response.json(); pm.expect(jsonData).to.have.property('id'); pm.expect(jsonData).to.have.property('store'); pm.expect(jsonData).to.have.property('item'); pm.expect(jsonData).to.have.property('quantity'); } });
+      pm.test('If 200: quantity is a number', function() { if (pm.response.code === 200) { var jsonData = pm.response.json(); pm.expect(jsonData.quantity).to.be.a('number'); } });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

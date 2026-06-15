@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Create Customer - Missing Required Field (Negative Test)'
+method: POST
+url: '{{baseUrl}}/api/customers'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "No Phone Customer"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 400', function() { pm.response.to.have.status(400); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

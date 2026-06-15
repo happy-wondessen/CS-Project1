@@ -1,0 +1,21 @@
+$kind: http-request
+name: Transfer Stock
+method: POST
+url: '{{baseUrl}}/api/inventory/transfer'
+order: 5000
+queryParams:
+  - key: fromStoreId
+    value: '1'
+  - key: toStoreId
+    value: '2'
+  - key: itemId
+    value: '1'
+  - key: quantity
+    value: '5'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200 OR 400', function() { pm.expect(pm.response.code).to.be.oneOf([200, 400]); });
+      pm.test('If 200: response has transfer details', function() { if (pm.response.code === 200) { var jsonData = pm.response.json(); pm.expect(jsonData).to.be.an('object'); } });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

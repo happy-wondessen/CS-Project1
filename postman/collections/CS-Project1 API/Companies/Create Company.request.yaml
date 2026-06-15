@@ -1,0 +1,23 @@
+$kind: http-request
+name: Create Company
+method: POST
+url: '{{baseUrl}}/api/companies'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Tech Supplies Inc",
+      "phone": "0712345678"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function() { pm.response.to.have.status(200); });
+      pm.test('Response body has id, name, phone', function() { var jsonData = pm.response.json(); pm.expect(jsonData).to.have.property('id'); pm.expect(jsonData).to.have.property('name'); pm.expect(jsonData).to.have.property('phone'); });
+      pm.test('name in response equals "Tech Supplies Inc"', function() { var jsonData = pm.response.json(); pm.expect(jsonData.name).to.eql('Tech Supplies Inc'); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

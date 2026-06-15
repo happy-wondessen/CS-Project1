@@ -1,0 +1,20 @@
+$kind: http-request
+name: 'Transfer Stock - Insufficient Stock (Negative Test)'
+method: POST
+url: '{{baseUrl}}/api/inventory/transfer'
+order: 6000
+queryParams:
+  - key: fromStoreId
+    value: '1'
+  - key: toStoreId
+    value: '2'
+  - key: itemId
+    value: '1'
+  - key: quantity
+    value: '999999'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 400 (insufficient stock should be rejected)', function() { pm.response.to.have.status(400); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

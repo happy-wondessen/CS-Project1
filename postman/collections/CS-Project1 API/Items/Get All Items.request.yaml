@@ -1,0 +1,12 @@
+$kind: http-request
+name: Get All Items
+method: GET
+url: '{{baseUrl}}/api/items'
+order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 200', function() { pm.response.to.have.status(200); });
+      pm.test('Response is a JSON array', function() { var jsonData = pm.response.json(); pm.expect(jsonData).to.be.an('array'); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

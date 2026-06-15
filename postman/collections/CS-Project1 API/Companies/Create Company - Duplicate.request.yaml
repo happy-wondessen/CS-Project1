@@ -1,0 +1,21 @@
+$kind: http-request
+name: 'Create Company - Duplicate (Negative Test)'
+method: POST
+url: '{{baseUrl}}/api/companies'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "name": "Tech Supplies Inc",
+      "phone": "0712345678"
+    }
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 400 (duplicate should be rejected)', function() { pm.response.to.have.status(400); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });

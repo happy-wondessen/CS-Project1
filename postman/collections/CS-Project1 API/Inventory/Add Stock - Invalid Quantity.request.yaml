@@ -1,0 +1,18 @@
+$kind: http-request
+name: 'Add Stock - Invalid Quantity (Negative Test)'
+method: POST
+url: '{{baseUrl}}/api/inventory/add'
+order: 4000
+queryParams:
+  - key: storeId
+    value: '1'
+  - key: itemId
+    value: '1'
+  - key: quantity
+    value: '-5'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test('Status code is 400 (negative quantity should be rejected)', function() { pm.response.to.have.status(400); });
+      pm.test('Response time is less than 2000ms', function() { pm.expect(pm.response.responseTime).to.be.below(2000); });
