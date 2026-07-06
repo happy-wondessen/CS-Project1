@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.example.demo.models.PaymentMethod;
 import com.example.demo.enumeration.SaleStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
